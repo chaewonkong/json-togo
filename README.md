@@ -35,7 +35,7 @@ jtg [flags] < input.json
 | ----------- | --------- | ---------------------------------- | -------------------- |
 | `--package` | `-p`      | Package name in the generated file | `main`               |
 | `--struct`  | `-s`      | Name of the root struct            | `Data`               |
-| `--output`  | `-o`      | Path to output `.go` file          | *(prints to stdout)* |
+| `--output`  | `-o`      | Path to output `.go` file          | `${packageName}.go` |
 
 ### Example Usage
 
