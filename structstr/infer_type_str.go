@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// InferTypeString infers the Go type string from a given value.
 func InferTypeString(val any) string {
 	switch v := val.(type) {
 	case string:

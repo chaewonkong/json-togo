@@ -5,6 +5,7 @@ import (
 	"unicode"
 )
 
+// ToPascalCase converts a string to PascalCase.
 func ToPascalCase(snake string) string {
 	var sb strings.Builder
 	toUpper := false

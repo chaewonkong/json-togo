@@ -9,7 +9,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Command() *cobra.Command {
+// NewCommand creates a new cobra command for the json-togo CLI tool.
+func NewCommand() *cobra.Command {
 	var pkgName, structName, outFile string
 
 	var rootCmd = &cobra.Command{
@@ -17,12 +18,7 @@ func Command() *cobra.Command {
 		Short: "Convert JSON to Go struct",
 		Long:  `A simple CLI tool to convert JSON data to Go struct definitions.`,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			runOpt := RunOptions{
-				PackageName: pkgName,
-				StructName:  structName,
-				OutputFile:  outFile,
-			}
-			return Run(runOpt)
+			return run(pkgName, structName, outFile)
 		},
 	}
 
@@ -33,13 +29,7 @@ func Command() *cobra.Command {
 	return rootCmd
 }
 
-type RunOptions struct {
-	PackageName string
-	StructName  string
-	OutputFile  string
-}
-
-func Run(o RunOptions) error {
+func run(pkgName, structName, outputFile string) error {
 	var jsonMap map[string]any
 
 	// read from stdin
@@ -49,17 +39,17 @@ func Run(o RunOptions) error {
 		return fmt.Errorf("failed to decode JSON: %w", err)
 	}
 
-	s := structstr.Generate(jsonMap, o.PackageName, o.StructName)
+	s := structstr.Generate(jsonMap, pkgName, structName)
 
 	// print and return
 	fmt.Println(s)
 
 	// write to file if specified
-	if o.OutputFile == "" {
-		o.OutputFile = fmt.Sprintf("%s.go", o.OutputFile)
+	if outputFile == "" {
+		outputFile = fmt.Sprintf("%s.go", outputFile)
 	}
 
-	file, err := os.Create(o.OutputFile)
+	file, err := os.Create(outputFile)
 	if err != nil {
 		return fmt.Errorf("failed to create output file: %w", err)
 	}
@@ -67,7 +57,7 @@ func Run(o RunOptions) error {
 	if _, err := file.WriteString(s); err != nil {
 		return fmt.Errorf("failed to write to output file: %w", err)
 	}
-	fmt.Printf("Struct written to %s\n", o.OutputFile)
+	fmt.Printf("Struct written to %s\n", outputFile)
 
 	return nil
 }
