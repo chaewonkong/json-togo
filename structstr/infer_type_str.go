@@ -1,30 +1,9 @@
-package utils
+package structstr
 
 import (
 	"encoding/json"
 	"strings"
-	"unicode"
 )
-
-func ToPascalCase(snake string) string {
-	var sb strings.Builder
-	toUpper := false
-	for idx, r := range snake {
-		if idx == 0 || toUpper {
-			r = unicode.ToUpper(r)
-			toUpper = false // reset
-		}
-
-		if r == '_' {
-			toUpper = true
-			continue // skip underscore
-		}
-
-		sb.WriteRune(r)
-	}
-
-	return sb.String()
-}
 
 func InferTypeString(val any) string {
 	switch v := val.(type) {
