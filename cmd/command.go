@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"encoding/json"
@@ -10,7 +10,7 @@ import (
 )
 
 // NewCommand creates a new cobra command for the json-togo CLI tool.
-func NewCommand() *cobra.Command {
+func New() *cobra.Command {
 	var pkgName, structName, outFile string
 
 	var rootCmd = &cobra.Command{
