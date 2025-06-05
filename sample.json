@@ -10,7 +10,14 @@
     "preferences": {
         "theme": "dark",
         "notifications": true,
-        "language": "en-US"
+        "language": "en-US",
+        "timezone": [
+            "America/New_York"
+        ],
+        "privacy": {
+            "shareProfile": true,
+            "showOnlineStatus": false
+        }
     },
     "height": 170.5,
     "weight": 65.2
