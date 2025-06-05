@@ -46,7 +46,7 @@ func run(pkgName, structName, outputFile string) error {
 
 	// write to file if specified
 	if outputFile == "" {
-		outputFile = fmt.Sprintf("%s.go", outputFile)
+		outputFile = fmt.Sprintf("%s.go", pkgName)
 	}
 
 	file, err := os.Create(outputFile)
