@@ -20,7 +20,7 @@ Parses JSON input and generates Go struct definitions with JSON tags.
 ## 📦 Installation
 
 ```bash
-go install github.com/chaewonkong/json-togo@v1.0.0
+go install github.com/chaewonkong/json-togo/cmd/jtg@v1.1.0
 ```
 
 ## 🛠 Usage
