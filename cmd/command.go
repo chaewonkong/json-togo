@@ -3,6 +3,7 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
+	"go/format"
 	"os"
 
 	"github.com/chaewonkong/json-togo/structstr"
@@ -41,8 +42,11 @@ func run(pkgName, structName, outputFile string) error {
 
 	s := structstr.Generate(jsonMap, pkgName, structName)
 
-	// print and return
-	fmt.Println(s)
+	// format the generated struct
+	formatted, err := format.Source([]byte(s))
+	if err != nil {
+		return fmt.Errorf("failed to format Go source: %w", err)
+	}
 
 	// write to file if specified
 	if outputFile == "" {
@@ -54,10 +58,13 @@ func run(pkgName, structName, outputFile string) error {
 		return fmt.Errorf("failed to create output file: %w", err)
 	}
 	defer file.Close()
-	if _, err := file.WriteString(s); err != nil {
+	if _, err := file.Write(formatted); err != nil {
 		return fmt.Errorf("failed to write to output file: %w", err)
 	}
-	fmt.Printf("Struct written to %s\n", outputFile)
+
+	// print results
+	fmt.Printf("Struct written to: %s\n", outputFile)
+	fmt.Printf("Generated struct:\n\n%s\n", formatted)
 
 	return nil
 }
